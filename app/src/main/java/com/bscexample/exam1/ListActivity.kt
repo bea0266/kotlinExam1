@@ -2,10 +2,15 @@ package com.bscexample.exam1
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.list.*
 
-class ListActivity : Activity() {
+class ListActivity : AppCompatActivity() {
 
     val data = ArrayList<Hero>()
 
@@ -51,4 +56,28 @@ class ListActivity : Activity() {
         rdb.close()
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.list_menu, menu)
+        return true
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_del -> {
+                Toast.makeText(applicationContext, "삭제 메뉴 클릭", Toast.LENGTH_SHORT).show()
+
+            }
+            R.id.menu_to_main -> {
+                Toast.makeText(applicationContext, "메인 메뉴 클릭", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }
