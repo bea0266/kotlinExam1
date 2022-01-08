@@ -8,7 +8,8 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.list.*
+import com.bscexample.exam1.databinding.ListBinding
+
 
 class ListActivity : AppCompatActivity() {
 
@@ -16,18 +17,19 @@ class ListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list)
+        val binding = ListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
 
 
-        var adapter : CustomAdapter = CustomAdapter(data)
-        listview.adapter = adapter
+        var adapter : CustomAdapter = CustomAdapter(applicationContext,data)
+        binding.listview.adapter = adapter
 
         var helper : DBHelper = execHelper()
         getHeroes(helper)
 
-        btnMain.setOnClickListener {
+        binding.btnMain.setOnClickListener {
             finish()
         }
 

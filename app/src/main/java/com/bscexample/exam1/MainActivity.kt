@@ -14,12 +14,15 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import kotlinx.android.synthetic.main.activity_main.*
+import com.bscexample.exam1.databinding.ActivityMainBinding
+
 private lateinit var getResult: ActivityResultLauncher<Intent>
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
 
 
@@ -34,14 +37,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        btnCreate.setOnClickListener {
+        binding.btnCreate.setOnClickListener {
 
-            var name: String = edtName.getText().toString()
-            var pos: String = edtPos.getText().toString()
-            var line: String = edtLine.getText().toString()
+            var name: String = binding.edtName.getText().toString()
+            var pos: String = binding.edtPos.getText().toString()
+            var line: String = binding.edtLine.getText().toString()
 
             var hero: Hero = Hero(name, pos, line)
-            hero.printInfo()
 
             var helper : DBHelper = execHelper(name, pos, line)
             insertHero(helper, name, pos, line)
