@@ -6,14 +6,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bscexample.exam1.databinding.ListBinding
 
 
 class ListActivity : AppCompatActivity() {
 
-    val data = ArrayList<Hero>()
+    val data = mutableListOf<Hero>()
+    var adapter = CustomAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +26,10 @@ class ListActivity : AppCompatActivity() {
 
 
 
-        var adapter : CustomAdapter = CustomAdapter(applicationContext,data)
-        binding.listview.adapter = adapter
 
+
+        binding.recyclerview.adapter = adapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
         var helper : DBHelper = execHelper()
         getHeroes(helper)
 
@@ -51,13 +55,17 @@ class ListActivity : AppCompatActivity() {
         val cursor = rdb.rawQuery("SELECT * FROM hero", null)
         while(cursor.moveToNext()){
 
-            data.add(Hero(cursor.getString(0), cursor.getString(1), cursor.getString(2)))
+            adapter.loadData(cursor.getString(0), cursor.getString(1), cursor.getString(2))
+
 
         }
 
         rdb.close()
 
     }
+
+
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
@@ -80,6 +88,5 @@ class ListActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
 
 }
